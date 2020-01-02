@@ -1,0 +1,79 @@
+﻿<Window x:Class="Ostsoft.Games.SuperKinectroid.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Super Kinectroid"
+        Height="450" Width="700"
+        Loaded="MainWindow_Loaded"
+        Closing="MainWindow_Closing">
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <Style TargetType="{x:Type Button}" x:Key="ScreenshotButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <TextBlock x:Name="ScreenshotText" Text="{TemplateBinding Content}"
+                                           TextAlignment="Left" VerticalAlignment="Center"
+                                           Foreground="{StaticResource KinectPurpleBrush}" FontSize="15" />
+                                <Grid Margin="9,0,0,0">
+                                    <!-- <Image x:Name="ScreenshotNormal" Source="Images\ScreenshotNormal.png" Stretch="None" HorizontalAlignment="Center" /> -->
+                                    <!-- <Image x:Name="ScreenshotHover" Source="Images\ScreenshotHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed" /> -->
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <!-- <Setter Property="Visibility" Value="Collapsed" TargetName="ScreenshotNormal" /> -->
+                                <!-- <Setter Property="Visibility" Value="Visible" TargetName="ScreenshotHover" /> -->
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}"
+                                        TargetName="ScreenshotText" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0 0 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!-- <RowDefinition Height="360" /> -->
+            <!-- <RowDefinition Height="Auto" /> -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Viewbox Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Left">
+            <!-- <Image Source="{Binding ImageSource}" Stretch="UniformToFill" /> -->
+            <Grid Background="Black">
+                <Image Source="{Binding ColorBitmap}" Visibility="{Binding ColorVisibility}" />
+                <Image Source="{Binding InfraredBitmap}" Visibility="{Binding InfraredVisibility}" />
+                <Image Source="{Binding BodySource}" Visibility="{Binding BodyVisibility}" />
+                <Image Source="{Binding ZoneSource}" Visibility="{Binding BodyVisibility}" />
+            </Grid>
+        </Viewbox>
+
+        <StatusBar Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Name="StatusBar"
+                   VerticalAlignment="Bottom"
+                   Background="White" Foreground="{StaticResource MediumGreyBrush}">
+            <StatusBarItem Content="{Binding StatusText}" />
+        </StatusBar>
+        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource ScreenshotButton}" Content="Infrared" Height="Auto"
+                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 10 0 10"
+                Click="InfraredButton_Click" />
+        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ScreenshotButton}" Content="Color" Height="Auto"
+                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 10 0 10"
+                Click="ColorButton_Click" />
+        <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource ScreenshotButton}" Content="Body" Height="Auto"
+                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 10 0 10"
+                Click="BodyButton_Click" />
+    </Grid>
+</Window>
